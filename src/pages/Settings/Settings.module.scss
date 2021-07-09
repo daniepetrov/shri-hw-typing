@@ -1,0 +1,42 @@
+@import '@/styles/mixins';
+
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  max-width: 576px;
+}
+
+.configurer {
+  width: 100%;
+}
+
+.heading {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.subheading {
+  margin-top: 8px;
+  color: var(--color-blue-gray-400);
+}
+
+.header {
+}
+
+.footer {
+  display: grid;
+  grid-row-gap: 12px;
+
+  @include desktop() {
+    grid-column-gap: 8px;
+    grid-template-columns: min-content min-content;
+  }
+}
+
+.formError {
+  color: var(--color-danger);
+}

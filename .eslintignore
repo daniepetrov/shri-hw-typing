@@ -1,0 +1,3 @@
+# .estlintignore file
+build
+node_modules/

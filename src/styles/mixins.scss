@@ -1,0 +1,10 @@
+@mixin desktop() {
+  @media screen and (min-width: 576px) {
+    @content;
+  }
+}
+
+@mixin text-body() {
+  font-size: 1rem;
+  font-weight: 500;
+}

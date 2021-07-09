@@ -1,0 +1,23 @@
+.root {
+  width: 100%;
+  padding: 9px 11px 8px;
+  border: 2px solid;
+  outline: none;
+  border-color: var(--color-gray-100a);
+  border-radius: 4px;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1;
+
+  &::placeholder {
+    color: var(--color-gray-100b);
+  }
+
+  &:focus {
+    border-color: var(--color-gray-200);
+  }
+
+  &::selection {
+    background: var(--color-primary);
+  }
+}

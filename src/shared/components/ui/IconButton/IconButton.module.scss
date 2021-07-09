@@ -1,0 +1,25 @@
+@import '@/styles/mixins';
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: none;
+  border-radius: 4px;
+  padding: 8px;
+  user-select: none;
+  cursor: pointer;
+  background-color: var(--color-gray-50a);
+}
+
+.text {
+  line-height: 1;
+  margin-left: 6px;
+  display: none;
+  padding-right: 2px;
+
+  @include desktop() {
+    display: inline-flex;
+  }
+}

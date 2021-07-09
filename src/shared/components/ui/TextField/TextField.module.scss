@@ -1,0 +1,30 @@
+.root {
+  display: block;
+}
+
+.button {
+  background-color: transparent;
+  position: absolute;
+  height: 100%;
+  width: 36px;
+  right: 0;
+  color: var(--color-gray-100b);
+}
+
+.label {
+  margin-bottom: 8px;
+  display: block;
+}
+
+.required {
+  color: var(--color-red-400);
+}
+
+.field {
+  position: relative;
+}
+
+.error {
+  margin-top: 4px;
+  color: var(--color-danger);
+}

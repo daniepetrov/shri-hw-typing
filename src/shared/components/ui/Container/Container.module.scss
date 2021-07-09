@@ -1,0 +1,12 @@
+@import '@/styles/mixins';
+
+.root {
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 16px;
+  height: var(--height, auto);
+
+  @include desktop() {
+    max-width: 872px;
+  }
+}

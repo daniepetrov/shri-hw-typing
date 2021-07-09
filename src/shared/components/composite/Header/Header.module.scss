@@ -1,0 +1,32 @@
+@import '@/styles/mixins';
+
+.root {
+  padding: 12px 0;
+  min-height: 53px;
+}
+
+.logo {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--color-blue-gray-400);
+
+  @include desktop() {
+    font-size: 24px;
+  }
+
+  &.saturated {
+    color: var(--color-text);
+  }
+}
+
+.row {
+  display: grid;
+  height: 100%;
+  grid-gap: 8px;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: space-between;
+}

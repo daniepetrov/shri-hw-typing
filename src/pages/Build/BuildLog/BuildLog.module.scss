@@ -1,0 +1,27 @@
+@import '@/styles/mixins';
+
+.root {
+  background-color: var(--color-gray-50);
+  overflow: hidden;
+  position: relative;
+  margin: 0 -16px;
+  min-height: 200px;
+
+  @include desktop() {
+    margin: 0;
+    border-radius: 6px;
+  }
+}
+
+.inner {
+  padding: 8px 12px;
+
+  @include desktop() {
+    padding: 12px;
+  }
+}
+
+.scroller {
+  white-space: pre-wrap;
+  overflow-x: auto;
+}

@@ -1,0 +1,16 @@
+@import '@/styles/mixins';
+
+.root {
+}
+
+.scroller {
+  overflow: auto;
+}
+
+.buttonWrapper {
+  display: grid;
+
+  @include desktop() {
+    display: flex;
+  }
+}
