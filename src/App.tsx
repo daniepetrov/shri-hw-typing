@@ -7,6 +7,8 @@ import Settings from '@/pages/Settings'
 import Build from '@/pages/Build'
 import Error from '@/pages/Error'
 
+const unused = 'asdfasdf'
+
 function App() {
   return (
     <>

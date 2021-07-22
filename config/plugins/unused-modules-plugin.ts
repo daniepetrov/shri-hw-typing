@@ -1,7 +1,7 @@
-const { promises: fs } = require('fs')
-const path = require('path')
+import { promises as fs } from 'fs'
+import path from 'path'
 
-const { validate } = require('schema-utils')
+import { validate } from 'schema-utils'
 
 // schema for options object
 const schema = {
@@ -66,7 +66,7 @@ class UnusedModulesWebpackPlugin {
   }
 }
 
-module.exports = UnusedModulesWebpackPlugin
+export default UnusedModulesWebpackPlugin
 
 async function getFiles(pathSrc) {
   const entries = await fs.readdir(pathSrc, { withFileTypes: true })

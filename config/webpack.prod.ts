@@ -1,13 +1,14 @@
-const path = require('path')
-const { merge } = require('webpack-merge')
-const common = require('./webpack.common.js')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const webpack = require('webpack')
-const UnusedModulesWebpackPlugin = require('./plugins/unused-modules-plugin')
+import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import webpack from 'webpack'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
+// import UnusedModulesWebpackPlugin from './plugins/unused-modules-plugin'
 
-module.exports = merge(common, {
+export default {
+  entry: {
+    index: './src/index.tsx',
+  },
   mode: 'production',
   devtool: 'source-map',
 
@@ -17,11 +18,16 @@ module.exports = merge(common, {
     clean: true,
     publicPath: '/'
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '../src/'),
+    },
+  },
 
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|js)x?$/i,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
@@ -49,9 +55,9 @@ module.exports = merge(common, {
     ],
   },
   plugins: [
-    new UnusedModulesWebpackPlugin({
-      excludeStr: 'src/styles'
-    }),
+    // new UnusedModulesWebpackPlugin({
+    //   excludeStr: 'src/styles'
+    // }),
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify('/api'),
     }),
@@ -72,4 +78,4 @@ module.exports = merge(common, {
       new CssMinimizerPlugin(),
     ],
   },
-})
+}

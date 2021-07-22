@@ -1,10 +1,12 @@
-const path = require('path')
-const { merge } = require('webpack-merge')
-const common = require('./webpack.common.js')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const webpack = require('webpack')
+import path from 'path'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import webpack from 'webpack'
 
-module.exports = merge(common, {
+export default {
+  entry: {
+    index: './src/index.tsx',
+  },
   mode: 'development',
   devtool: 'inline-source-map',
 
@@ -17,12 +19,13 @@ module.exports = merge(common, {
     hot: true,
     port: 3000,
     historyApiFallback: true,
+    // open: true
   },
 
   module: {
     rules: [
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(ts|js)x?$/i,
         exclude: /node_modules/,
         use: 'babel-loader',
       },
@@ -54,7 +57,16 @@ module.exports = merge(common, {
       },
     ],
   },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, '../src/'),
+    },
+    extensions: [".tsx", ".ts", ".js"],
+  },
   plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      async: false
+    }),
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify('http://localhost:4000/api'),
     }),
@@ -64,4 +76,4 @@ module.exports = merge(common, {
       filename: 'index.html',
     }),
   ],
-})
+}

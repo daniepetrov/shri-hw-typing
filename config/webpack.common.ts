@@ -1,8 +1,8 @@
-const path = require('path')
+import path from 'path'
 
-module.exports = {
+export default {
   entry: {
-    index: './src/index.js',
+    index: './src/index.tsx',
   },
   resolve: {
     alias: {
