@@ -25,7 +25,7 @@ const CreateBuild = () => {
     setIsModalOpened(false)
   }
 
-  const runBuild = async (hash) => {
+  const runBuild = async (hash: string) => {
     const { data } = await mutateAsync(hash)
     handleClose()
     history.push(`/build/${data.id}`)

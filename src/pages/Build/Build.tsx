@@ -12,7 +12,7 @@ export default function BuildPage() {
   const { id } = useParams()
   const [, setCurrentHash] = useAtom(hashAtom)
   const {data: buildDetails, isError, isLoading, error} = useBuildDetails(id, {
-    onSuccess: (details) => {
+    onSuccess: (details: { data: { commitHash: unknown } }) => {
       setCurrentHash(details.data.commitHash)
     },
   })
@@ -26,7 +26,7 @@ export default function BuildPage() {
   } = useBuildLog(id)
 
   useEffect(() => {
-    let interval
+    let interval: number | Timer | Timer | Timer | Timer | Timer | Timer | Timer | Timer | Timer | Timer | Timer | Timer | Timer
     if (buildLog?.trim() === '') {
       interval = setInterval(() => {
         refetch()

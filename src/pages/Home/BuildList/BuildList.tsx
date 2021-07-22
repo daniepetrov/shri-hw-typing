@@ -27,7 +27,7 @@ export default function BuildList() {
 
   return (
     <VStack spacing={8}>
-      {realBuilds?.map((buildDetails) => {
+      {realBuilds?.map((buildDetails: JSX.IntrinsicAttributes) => {
         return (
           <Link key={buildDetails.id} to={`/build/${buildDetails.id}`}>
             <BuildCard {...buildDetails} />

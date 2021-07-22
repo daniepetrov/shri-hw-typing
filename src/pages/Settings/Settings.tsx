@@ -19,7 +19,7 @@ export default function SettingsPage() {
   const { isLoading, mutateAsync, error: murationError } = useSetSettings()
   const [form, setForm] = useState(initialFormState)
 
-  const handleChange = (e) => {
+  const handleChange = (e: { target: { name: string; value: string } }) => {
     const re = /\D/
     setForm({
       ...form,
@@ -28,18 +28,18 @@ export default function SettingsPage() {
     })
   }
 
-  const goBack = (e) => {
+  const goBack = (e: { preventDefault: () => void }) => {
     e.preventDefault()
     history.push('/')
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault()
     await mutateAsync(form)
     history.push('/')
   }
 
-  const handleReset = (name) =>
+  const handleReset = (name: string) =>
     setForm({
       ...form,
       [name]: '',
