@@ -31,7 +31,7 @@ export default function Home(): JSX.Element {
 
   return (
     <>
-      <Container height="100%">{isEmpty(data) ? <SettingsDummy /> : <BuildList />}</Container>
+      <Container height="100%">{data && isEmpty(data) ? <SettingsDummy /> : <BuildList />}</Container>
       <Modal data-testid="modal" isOpen={isModalOpened}>
         <CreateBuild />
       </Modal>
