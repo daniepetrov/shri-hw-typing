@@ -3,6 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import webpack from 'webpack'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 // import UnusedModulesWebpackPlugin from './plugins/unused-modules-plugin'
 
 export default {
@@ -22,6 +23,7 @@ export default {
     alias: {
       '@': path.resolve(__dirname, '../src/'),
     },
+    extensions: [".tsx", ".ts", ".js"],
   },
 
   module: {
@@ -58,6 +60,9 @@ export default {
     // new UnusedModulesWebpackPlugin({
     //   excludeStr: 'src/styles'
     // }),
+    new ForkTsCheckerWebpackPlugin({
+      async: false
+    }),
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify('/api'),
     }),

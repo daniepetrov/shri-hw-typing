@@ -23,7 +23,7 @@ const headers = {
 app.use(cors())
 app.use(express.json())
 
-const publicPath = path.resolve(__dirname, '../build')
+const publicPath = path.resolve(__dirname, '../../build')
 app.use(express.static(publicPath))
 app.use('/settings', express.static(publicPath))
 app.use('/build/*', express.static(publicPath))
