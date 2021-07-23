@@ -3,6 +3,7 @@ import s from './BuildCard.module.scss'
 import dayjs from 'dayjs'
 import 'dayjs/locale/ru'
 import duration from 'dayjs/plugin/duration'
+import { BuildStatusType } from '@/types/api'
 dayjs.locale('ru')
 dayjs.extend(duration)
 
@@ -24,7 +25,7 @@ const toDur = (duration: number, type: string): string => {
 }
 
 interface BuildCardProps {
-  status: keyof typeof statusMap
+  status: BuildStatusType
   buildNumber: number
   commitMessage: string
   commitHash: string
@@ -32,7 +33,7 @@ interface BuildCardProps {
   authorName: string
   start: Date
   duration: number
-  variant: 'normal' | 'wide'
+  variant?: 'normal' | 'wide'
 }
 
 export default function BuildCard({
@@ -50,8 +51,8 @@ export default function BuildCard({
   const datejs = dayjs(start)
   const month = datejs.format('MMM').slice(0, 3)
   const date = datejs.format('D')
-  const min = datejs.format('mm')
-  const sec = datejs.format('ss')
+  const hours = datejs.format('H')
+  const minutes = datejs.format('mm')
 
   return (
     <div className={s.root} data-testid="build-card">
@@ -86,7 +87,7 @@ export default function BuildCard({
               <HStack spacing={4} inline>
                 <Icon name="calendar" className={s.datetimeIcon} />
                 <div className={s.datetime}>
-                  {date} {month}, {min}:{sec}
+                  {date} {month}, {hours}:{minutes}
                 </div>
               </HStack>
               {status === 'Success' && (

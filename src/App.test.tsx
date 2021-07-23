@@ -5,12 +5,13 @@ import {
   useGetSettings,
   useSetSettings,
 } from '@/shared/services/hooks'
-import { fireEvent, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import App from './App'
 import buildCardMock from './__mocks__/buildCardMock'
 import buildLogMock from './__mocks__/buildLogMock'
 import buildsMock from './__mocks__/buildsMock'
 import settingsMock from './__mocks__/settingsMock'
+import userEvent from '@testing-library/user-event'
 
 jest.mock('@/shared/services/hooks', () => {
   const original = jest.requireActual('@/shared/services/hooks')
@@ -27,7 +28,7 @@ jest.mock('@/shared/services/hooks', () => {
 const mockedUseGetSettings = useGetSettings as jest.Mock<any>
 const mockedUseSetSettings = useSetSettings as jest.Mock<any>
 const mockedUseBuilds = useBuilds as jest.Mock<any>
-const mockedUseBuildDetails= useBuildDetails as jest.Mock<any>
+const mockedUseBuildDetails = useBuildDetails as jest.Mock<any>
 const mockedUseBuildLog = useBuildLog as jest.Mock<any>
 
 describe('Главная страница', () => {
@@ -156,7 +157,7 @@ describe('Главная страница', () => {
     it('Переход на страницу настроек при клике на кнопку настроек', () => {
       global.renderWithRouter(<App />, { route: '/' })
       const link = screen.getByTestId('settings-link')
-      fireEvent.click(link)
+      userEvent.click(link)
       const heading = screen.getByTestId('settings-heading')
       expect(heading).toBeInTheDocument()
     })
@@ -173,7 +174,7 @@ describe('Главная страница', () => {
       }))
       global.renderWithRouter(<App />, { route: '/' })
       const buildItems = screen.getAllByTestId('build-card')
-      fireEvent.click(buildItems[0])
+      userEvent.click(buildItems[0])
       const buttonRebuild = screen.getByTestId('rebuild-button')
 
       expect(buttonRebuild).toBeInTheDocument()
@@ -196,7 +197,7 @@ describe('Главная страница', () => {
 
     global.renderWithRouter(<App />, { route: '/' })
     const button = screen.getByTestId('run-button')
-    fireEvent.click(button)
+    userEvent.click(button)
     const modal = screen.getByTestId('modal')
     expect(modal).toBeInTheDocument()
   })
@@ -240,7 +241,9 @@ describe('Страница настроек', () => {
     }))
     global.renderWithRouter(<App />, { route: '/settings' })
     const logo = screen.queryByTestId('home-link')
-    fireEvent.click(logo)
+    if (logo) {
+      userEvent.click(logo)
+    }
     expect(logo).not.toBeInTheDocument()
   })
 })
@@ -340,7 +343,7 @@ describe('Страница билда', () => {
     it('Переход на страницу настроек при клике на кнопку настроек', () => {
       global.renderWithRouter(<App />, { route: `/build/${buildCardMock.id}` })
       const link = screen.getByTestId('settings-link')
-      fireEvent.click(link)
+      userEvent.click(link)
       const heading = screen.getByTestId('settings-heading')
       expect(heading).toBeInTheDocument()
     })
@@ -348,7 +351,9 @@ describe('Страница билда', () => {
     it('При клике на логотип происходит переход на главную страницу', () => {
       global.renderWithRouter(<App />, { route: `/build/${buildCardMock.id}` })
       const logo = screen.queryByTestId('home-link')
-      fireEvent.click(logo)
+      if (logo) {
+        userEvent.click(logo)
+      }
       expect(logo).not.toBeInTheDocument()
     })
   })

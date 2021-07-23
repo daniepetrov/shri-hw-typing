@@ -2,6 +2,7 @@ import { Container, HStack, IconButton } from '@/shared/components/ui'
 import { createBuild } from '@/shared/services/api'
 import { useGetSettings } from '@/shared/services/hooks'
 import { hashAtom, modalAtom } from '@/shared/store'
+import { IApiConfGetData } from '@/types/api'
 import sx from 'clsx'
 import { useAtom } from 'jotai'
 import { Link, useHistory, useLocation } from 'react-router-dom'
@@ -17,16 +18,16 @@ export default function Header(): JSX.Element {
   const isSettingsPage = pathname.includes('/settings')
   const isBuildPage = pathname.includes('/build/')
 
-  const logo = (settings: { data: { repoName: string } }) => {
-    if ((settings?.data && isIndexPage) || isBuildPage) {
-      return settings?.data?.repoName
+  const logo = (settings: IApiConfGetData) => {
+    if ((settings && isIndexPage) || isBuildPage) {
+      return settings?.repoName
     } else {
       return 'School CI Server'
     }
   }
 
   const logoClasses = sx(s.logo, {
-    [s.saturated]: (settings?.data && isIndexPage) || isBuildPage,
+    [s.saturated]: (settings && isIndexPage) || isBuildPage,
   })
 
   const openModal = (): void => {
@@ -34,8 +35,8 @@ export default function Header(): JSX.Element {
   }
 
   const rebuild = async (hash: string): Promise<void> => {
-    const { data } = await createBuild(hash)
-    history.push(`/build/${data.id}`)
+    const { id } = await createBuild(hash)
+    history.push(`/build/${id}`)
   }
 
   return (
@@ -43,11 +44,11 @@ export default function Header(): JSX.Element {
       <Container height="100%">
         <div className={s.row}>
           <div className={logoClasses}>
-            {isIndexPage ? (
+            {isIndexPage && settings ? (
               <span>{logo(settings)}</span>
             ) : (
               <Link data-testid="home-link" to="/">
-                {logo(settings)}
+                {settings && logo(settings)}
               </Link>
             )}
           </div>
@@ -62,7 +63,7 @@ export default function Header(): JSX.Element {
                 Rebuild
               </IconButton>
             )}
-            {isIndexPage && settings?.data && (
+            {isIndexPage && settings && (
               <IconButton data-testid="run-button" onClick={openModal} size="xs" name="play">
                 Run build
               </IconButton>
@@ -70,7 +71,7 @@ export default function Header(): JSX.Element {
             {!isSettingsPage && (
               <Link to="/settings" data-testid="settings-link">
                 <IconButton size="xs" name="gear">
-                  {isIndexPage && !settings?.data && 'Settings'}
+                  {isIndexPage && !settings && 'Settings'}
                 </IconButton>
               </Link>
             )}

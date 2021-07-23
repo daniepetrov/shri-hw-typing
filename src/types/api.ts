@@ -2,7 +2,7 @@ export interface IApiConfPostData {
   repoName: string
   buildCommand: string
   mainBranch: string
-  period: number
+  period: number | string
 }
 
 export interface IApiConfGetData extends IApiConfPostData {
@@ -24,6 +24,9 @@ export interface IApiBuildData {
   duration: number
 }
 
-  
-
+export interface IApiBuildRequestData {
+  id: string,
+  buildNumber: number,
+  status: BuildStatusType
+}
 

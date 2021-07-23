@@ -1,14 +1,15 @@
-import { createElement, ReactNode } from 'react'
+import { ButtonHTMLAttributes, createElement, ReactNode } from 'react'
 import sx from 'clsx'
 import s from './Button.module.scss'
+import { LinkHTMLAttributes } from 'react'
 
 type ButtonProps = {
-  as: string
-  variant: 'primary' | 'secondary' | 'clear'
-  children: ReactNode
-  disabled: boolean
-  fullWidth: boolean
-}
+  as?: string
+  variant?: 'primary' | 'secondary' | 'clear'
+  children?: ReactNode
+  disabled?: boolean
+  fullWidth?: boolean
+} & ButtonHTMLAttributes<HTMLButtonElement> & LinkHTMLAttributes<HTMLLinkElement>
 
 export default function Button({
   as = 'button',
@@ -17,7 +18,7 @@ export default function Button({
   disabled,
   fullWidth,
   ...props
-}: ButtonProps): ReactNode {
+}: ButtonProps): JSX.Element {
   const classes = sx(s.root, {
     [s.fullwidth]: fullWidth,
     [s.primary]: variant === 'primary',

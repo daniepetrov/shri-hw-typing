@@ -8,7 +8,7 @@ import { getCommitInfoByHash, getBranchByCommitHash, cloneRepo } from './utils/g
 import { getBuildLog } from './utils/build'
 import Convert from 'ansi-to-html'
 import { PORT, API } from './config'
-import { IApiBuildData, IApiConfGetData } from './interfaces/api'
+import { IApiBuildData, IApiConfGetData } from './../types/api'
 
 const app = express()
 const convert = new Convert()
@@ -16,7 +16,6 @@ const convert = new Convert()
 if (!process.env.AUTH_TOKEN) {
   console.error('Error: Please, add AUTH_TOKEN env variable to .env file')
 }
-
 const headers = {
   Authorization: `Bearer ${process.env.AUTH_TOKEN}`,
 }
@@ -30,7 +29,7 @@ app.use('/settings', express.static(publicPath))
 app.use('/build/*', express.static(publicPath))
 
 
-app.get('/api/settings', async (req: Request, res: Response) => {
+app.get('/api/settings', async (_, res: Response) => {
   const response = await axios.get(`${API}/conf`, { headers })
   const data: IApiConfGetData = response.data
   return res.json(data)
@@ -58,8 +57,7 @@ app.get('/api/builds', async (req: Request, res: Response) => {
 app.post('/api/builds/:commitHash', async (req: Request, res: Response) => {
   // Получаем настройки
   const settingsRes = await axios.get(`${API}/conf`, { headers })
-  const settingsResData: IApiConfGetData = await settingsRes.data
-  const { buildCommand } = settingsResData
+  const { buildCommand }: IApiConfGetData = await settingsRes.data?.data
 
   // Получаем параметры для POST-запроса на добавление сборки в очередь
   const commitHash = req.params.commitHash
@@ -70,7 +68,8 @@ app.post('/api/builds/:commitHash', async (req: Request, res: Response) => {
 
     // Делаем запрос на добавление сборки в очередь
     const buildRes = await axios.post(`${API}/build/request`, body, { headers })
-    const { id: buildId } = await buildRes.data.data
+    const { id: buildId } = await buildRes.data?.data
+    console.log(buildRes.data)
     res.status(200).json(buildRes.data)
 
     const dateTime = new Date()
@@ -81,15 +80,15 @@ app.post('/api/builds/:commitHash', async (req: Request, res: Response) => {
       { headers },
     )
 
-    // Начинаем собирать сборку
+    // // Начинаем собирать сборку
     const buildLog = await getBuildLog(buildCommand)
 
-    // По окончании сборки отсылаем запрос на сервер о завершении
+    // // По окончании сборки отсылаем запрос на сервер о завершении
     await axios.post(
       `${API}/build/finish`,
       {
         buildId,
-        duration: ((new Date() - dateTime) / 1000).toFixed(),
+        duration: ((Number(new Date()) - Number(dateTime)) / 1000).toFixed(),
         success: true,
         buildLog: convert.toHtml(buildLog),
       },

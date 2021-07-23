@@ -5,15 +5,16 @@ import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useBuilds } from '@/shared/services/hooks'
 import ErrorDummy from '@/shared/components/composite/ErrorDummy'
+import { IApiBuildData } from '@/types/api'
 
-export default function BuildList() {
+export default function BuildList(): JSX.Element {
   const [offset, setOffset] = useState(0)
   const { data: builds, isLoading, isError, error } = useBuilds(offset)
-  const [realBuilds, setRealBuils] = useState([])
+  const [realBuilds, setRealBuils] = useState<IApiBuildData[]>([])
 
   useEffect(() => {
     if (builds) {
-      setRealBuils((data) => data.concat(builds.data))
+      setRealBuils((data) => data.concat(builds))
     }
   }, [builds])
 
@@ -22,12 +23,12 @@ export default function BuildList() {
   }
 
   if (isError) {
-    return <ErrorDummy error={{ text: error.message, buttonText: 'Try again' }} />
+    return <ErrorDummy error={{ text: error?.message, buttonText: 'Try again' }} />
   }
 
   return (
     <VStack spacing={8}>
-      {realBuilds?.map((buildDetails: JSX.IntrinsicAttributes) => {
+      {realBuilds?.map((buildDetails) => {
         return (
           <Link key={buildDetails.id} to={`/build/${buildDetails.id}`}>
             <BuildCard {...buildDetails} />

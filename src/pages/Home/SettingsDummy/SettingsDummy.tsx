@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import s from './SettingsDummy.module.scss'
 import image from './image.svg'
 
-export default function SettingsDummy() {
+export default function SettingsDummy(): JSX.Element {
   return (
     <div className={s.root}>
       <img className={s.image} width={124} height={124} src={image} alt="" />

@@ -1,16 +1,13 @@
 import s from './TextField.module.scss'
 import Input from '../Input'
 import IconButton from '../IconButton'
-import React, { useEffect, useState } from 'react'
+import { InputHTMLAttributes, useEffect, useState } from 'react'
 
 type TextFieldProps = {
-  value: string
-  onChange: React.FormEventHandler<HTMLInputElement>
-  error: string
-  onReset: () => void
-  label: string
-  required: boolean
-}
+  error?: string
+  onReset?: () => void
+  label?: string
+} & InputHTMLAttributes<HTMLInputElement>
 
 export default function TextField({
   value,
@@ -24,12 +21,12 @@ export default function TextField({
   const [input, setInput] = useState('')
 
   const handleReset = () => {
-    onReset()
+    onReset?.()
     setInput('')
   }
 
   useEffect(() => {
-    setInput(value)
+    setInput(String(value))
   }, [value])
 
   return (

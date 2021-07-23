@@ -3,8 +3,8 @@ import s from './ErrorDummy.module.scss'
 
 interface ErrorDummyProps {
   error: {
-    text: string
-    buttonText: string
+    text?: string
+    buttonText?: string
   }
 }
 

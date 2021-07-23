@@ -1,34 +1,34 @@
 import { Button, HStack, TextField, VStack } from '@/shared/components/ui'
-import { createBuild } from '@/shared/services/api'
+import { useCreateBuild } from '@/shared/services/hooks'
 import { modalAtom } from '@/shared/store'
 import { useAtom } from 'jotai'
-import { useState } from 'react'
-import { useMutation } from 'react-query'
+import { ChangeEvent, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import s from './CreateBuild.module.scss'
 
-const CreateBuild = () => {
+const CreateBuild = (): JSX.Element => {
   const [hash, setHash] = useState('')
   const [, setIsModalOpened] = useAtom(modalAtom)
   const history = useHistory()
-  const { mutateAsync, error } = useMutation(createBuild)
+  const { mutateAsync, error } = useCreateBuild()
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value)
     setHash(e.target.value)
   }
 
-  const handleReset = () => {
+  const handleReset = (): void => {
     setHash('')
   }
 
-  const handleClose = () => {
+  const handleClose = (): void => {
     setIsModalOpened(false)
   }
 
   const runBuild = async (hash: string) => {
-    const { data } = await mutateAsync(hash)
+    const { id } = await mutateAsync(hash)
     handleClose()
-    history.push(`/build/${data.id}`)
+    history.push(`/build/${id}`)
   }
 
   return (

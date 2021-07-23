@@ -1,43 +1,39 @@
-import { useMutation, useQuery, UseQueryOptions } from 'react-query'
-import { getSettings, saveSettings, getBuilds, getBuildDetails, getBuildLog } from '../api'
+import { IApiBuildData, IApiBuildRequestData, IApiConfGetData, IApiConfPostData } from '@/types/api'
+import { useMutation, UseMutationResult, useQuery, UseQueryOptions, UseQueryResult } from 'react-query'
+import { getSettings, saveSettings, getBuilds, getBuildDetails, getBuildLog, createBuild } from '../api'
 
-export const useGetSettings = () => {
-  const { data, error, isLoading, isError } = useQuery('settings', getSettings)
-  return { data, error, isLoading, isError }
+export const useGetSettings = (): UseQueryResult<IApiConfGetData, Error> => {
+  return useQuery('settings', getSettings)
 }
 
-export const useSetSettings = () => {
-  const { mutateAsync, isLoading: isMutating, error } = useMutation(saveSettings)
-
-  return { mutateAsync, isMutating, error }
+export const useSetSettings = (): UseMutationResult<void, Error, IApiConfPostData> => {
+  return useMutation(saveSettings)
 }
 
-export const useBuilds = (offset: number) => {
-  const { data, isLoading, error, isError } = useQuery(
+export const useBuilds = (offset: number): UseQueryResult<IApiBuildData[], Error> => {
+  return useQuery(
     ['builds', offset],
     () => getBuilds(offset),
     {
       keepPreviousData: true,
     },
   )
-
-  return { data, isLoading, error, isError }
 }
 
-export const useBuildDetails = (id, params: UseQueryOptions<any,unknown,any,any[]>) => {
-  const { data, isLoading, isError, error } = useQuery(
+export const useBuildDetails = (id: string, params: UseQueryOptions<IApiBuildData, Error>): UseQueryResult<IApiBuildData, Error> => {
+  return useQuery(
     ['buildDetails', id],
     () => getBuildDetails(id),
     params,
   )
-
-  return { data, isLoading, isError, error }
 }
 
-export const useBuildLog = (id) => {
-  const { data, isLoading, isSuccess, isError, error, refetch } = useQuery(['buildLog', id], () =>
+export const useBuildLog = (id: string): UseQueryResult<string, Error> => {
+  return useQuery(['buildLog', id], () =>
     getBuildLog(id),
   )
+}
 
-  return { data, isLoading, isError, isSuccess, refetch }
+export const useCreateBuild = (): UseMutationResult<IApiBuildRequestData, Error, string> => {
+  return useMutation(createBuild)
 }

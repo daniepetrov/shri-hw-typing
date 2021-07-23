@@ -9,7 +9,7 @@ type IconButtonProps = {
   className?: string
   name: keyof typeof iconsMap
   size?: keyof typeof sizesMap
-  children: ReactNode
+  children?: ReactNode
   onClick?: () => void
   'data-testid'?: string
 }

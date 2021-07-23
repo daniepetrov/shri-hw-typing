@@ -2,24 +2,25 @@ import { Button, Container, HStack, TextField, VStack } from '@/shared/component
 import NumberField from '@/shared/components/ui/NumberField'
 import { useGetSettings, useSetSettings } from '@/shared/services/hooks'
 import { isEmpty } from '@/shared/utils/common'
-import { useEffect, useState } from 'react'
+import { IApiConfPostData } from '@/types/api'
+import { ChangeEvent, FormEvent, MouseEvent, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import s from './Settings.module.scss'
 
-const initialFormState = {
+const initialFormState: IApiConfPostData = {
   repoName: '',
   buildCommand: '',
   mainBranch: '',
-  period: '',
+  period: 0,
 }
 
-export default function SettingsPage() {
+export default function SettingsPage(): JSX.Element {
   const history = useHistory()
   const { data: settings } = useGetSettings()
   const { isLoading, mutateAsync, error: murationError } = useSetSettings()
   const [form, setForm] = useState(initialFormState)
 
-  const handleChange = (e: { target: { name: string; value: string } }) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const re = /\D/
     setForm({
       ...form,
@@ -28,12 +29,12 @@ export default function SettingsPage() {
     })
   }
 
-  const goBack = (e: { preventDefault: () => void }) => {
+  const goBack = (e: MouseEvent<HTMLElement>): void => {
     e.preventDefault()
     history.push('/')
   }
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault()
     await mutateAsync(form)
     history.push('/')
@@ -46,8 +47,8 @@ export default function SettingsPage() {
     })
 
   useEffect(() => {
-    if (!isEmpty(settings)) {
-      setForm(settings.data)
+    if (settings && !isEmpty(settings)) {
+      setForm(settings)
     }
   }, [settings])
 

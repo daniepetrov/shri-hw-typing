@@ -5,9 +5,10 @@ import s from './Modal.module.scss'
 type ModalProps = {
   isOpen: boolean
   children: ReactNode
+  'data-testid': string
 }
 
-function Modal({ isOpen, children, ...props }: ModalProps): ReactNode {
+function Modal({ isOpen, children, ...props }: ModalProps): JSX.Element | null {
   if (!isOpen) return null
   return createPortal(
     <div className={s.root} {...props}>

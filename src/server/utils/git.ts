@@ -16,10 +16,11 @@ const getCommitInfoByHash = async (hash: string): Promise<string[]> => {
       .map((item) => item.replace(/\n/, '').trim())
   } catch (error) {
     console.log(`Status Code: ${error.status} with '${error.message}'`)
+    return []
   }
 }
 
-const getBranchByCommitHash = async (hash: string): Promise<string> => {
+const getBranchByCommitHash = async (hash: string): Promise<string | undefined> => {
   try {
     const { stdout } = await exec(`git branch -r --contains ${hash}`, {
       cwd: path.resolve('./tmp/repository'),

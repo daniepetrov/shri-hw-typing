@@ -9,7 +9,7 @@ import { modalAtom } from '@/shared/store'
 import { isEmpty } from '@/shared/utils/common'
 import { useAtom } from 'jotai'
 
-export default function Home() {
+export default function Home(): JSX.Element {
   const [isModalOpened] = useAtom(modalAtom)
   const { data, error, isLoading, isError } = useGetSettings()
 
@@ -24,7 +24,7 @@ export default function Home() {
   if (isError) {
     return (
       <Container height="100%">
-        <ErrorDummy error={{ text: error.message, buttonText: 'Try again' }} />
+        <ErrorDummy error={{ text: error?.message, buttonText: 'Try again' }} />
       </Container>
     )
   }
@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <>
       <Container height="100%">{isEmpty(data) ? <SettingsDummy /> : <BuildList />}</Container>
-      <Modal data-testid='modal' isOpen={isModalOpened}>
+      <Modal data-testid="modal" isOpen={isModalOpened}>
         <CreateBuild />
       </Modal>
     </>

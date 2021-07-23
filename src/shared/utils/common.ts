@@ -7,7 +7,7 @@ export const vars = (obj: Record<string, string>): Record<string, string> => {
 
 export const px = (val: string | number): string => (typeof val === 'number' ? val + 'px' : val)
 
-export const isEmpty = (obj: Record<string, string>): boolean => {
+export const isEmpty = (obj: Record<string, string> | any): boolean => {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) return false
   }

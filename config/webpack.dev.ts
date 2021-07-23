@@ -63,9 +63,9 @@ export default {
     extensions: [".tsx", ".ts", ".js"],
   },
   plugins: [
-    // new ForkTsCheckerWebpackPlugin({
-    //   async: false
-    // }),
+    new ForkTsCheckerWebpackPlugin({
+      async: false
+    }),
     new webpack.DefinePlugin({
       'process.env.API_URL': JSON.stringify('http://localhost:4000/api'),
     }),
