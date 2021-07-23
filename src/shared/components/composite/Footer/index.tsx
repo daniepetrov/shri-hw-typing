@@ -2,7 +2,7 @@ import { Container } from '@/shared/components/ui'
 import data from './data'
 import s from './Footer.module.scss'
 
-function Footer() {
+function Footer(): JSX.Element {
   return (
     <footer data-testid='footer' className={s.root}>
       <Container>

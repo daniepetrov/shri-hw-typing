@@ -1,8 +1,9 @@
+import { IApiConfGetData, IApiConfPostData } from '@/types/api'
 import axios from 'axios'
 
 const API_URL = process.env.API_URL || '/api'
 
-export const getSettings = async () => {
+export const getSettings = async (): Promise<IApiConfGetData> => {
   const res = await axios.get(`${API_URL}/settings`)
 
   if (res.statusText !== 'OK') {
@@ -11,7 +12,7 @@ export const getSettings = async () => {
   return res.data
 }
 
-export const saveSettings = async (data) => {
+export const saveSettings = async (data: IApiConfPostData) => {
   const res = await axios.post(`${API_URL}/settings`, data)
 
   if (res.statusText !== 'OK') {

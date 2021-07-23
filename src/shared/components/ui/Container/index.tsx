@@ -1,14 +1,20 @@
-import { ReactNode } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 import s from './Container.module.scss'
 
 type ContainerProps = {
   children: ReactNode
-  height: string
+  height?: string
 }
 
-export default function Container({ children, height = 'auto' }: ContainerProps): JSX.Element {
+interface CssPropertiesVars extends CSSProperties {
+  '--height': string
+}
+
+export default function Container({ children, height }: ContainerProps): JSX.Element {
+  const containerStyle = height ? { '--height': height } : undefined
+
   return (
-    <div className={s.root} style={height ? { '--height': height } : null}>
+    <div className={s.root} style={containerStyle as CssPropertiesVars}>
       {children}
     </div>
   )

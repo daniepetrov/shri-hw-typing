@@ -5,11 +5,13 @@ import sx from 'clsx'
 import { ReactNode } from 'react'
 
 type IconButtonProps = {
-  as: string
-  className: string
+  as?: string
+  className?: string
   name: keyof typeof iconsMap
-  size: keyof typeof sizesMap
+  size?: keyof typeof sizesMap
   children: ReactNode
+  onClick?: () => void
+  'data-testid'?: string
 }
 
 export default function IconButton({

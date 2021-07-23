@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node server/index.ts",
-    "watch": "nodemon server/index.ts",
+    "start": "ts-node src/server/index.ts",
+    "watch": "nodemon src/server/index.ts",
     "dev": "webpack serve --config config/webpack.dev.ts",
     "build": "webpack --config config/webpack.prod.ts",
     "test": "jest",

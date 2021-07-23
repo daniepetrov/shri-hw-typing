@@ -33,8 +33,8 @@ export const sizesMap = {
 }
 
 type IconProps = {
-  name: keyof typeof iconsMap
-  size: keyof typeof sizesMap
+  name: keyof typeof iconsMap | string
+  size?: keyof typeof sizesMap
   className?: string
   color?: string
 }

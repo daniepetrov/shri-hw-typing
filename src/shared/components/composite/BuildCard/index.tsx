@@ -13,7 +13,7 @@ const statusMap = {
   Fail: 'fail',
 }
 
-const toDur = (duration, type: string) => {
+const toDur = (duration: number, type: string): string => {
   const typeMap = {
     H: 'ч',
     m: 'мин',
@@ -21,6 +21,18 @@ const toDur = (duration, type: string) => {
   }
   const durMs = dayjs.duration((duration || 0) * 1000).format(type)
   return Number(durMs) ? `${durMs} ${typeMap[type]}` : ''
+}
+
+interface BuildCardProps {
+  status: keyof typeof statusMap
+  buildNumber: number
+  commitMessage: string
+  commitHash: string
+  branchName: string
+  authorName: string
+  start: Date
+  duration: number
+  variant: 'normal' | 'wide'
 }
 
 export default function BuildCard({
@@ -33,7 +45,7 @@ export default function BuildCard({
   start,
   duration,
   variant,
-}) {
+}: BuildCardProps): JSX.Element {
   const commitHashTail = commitHash?.slice(-7)
   const datejs = dayjs(start)
   const month = datejs.format('MMM').slice(0, 3)

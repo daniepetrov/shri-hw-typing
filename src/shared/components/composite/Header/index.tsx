@@ -7,7 +7,7 @@ import { useAtom } from 'jotai'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import s from './Header.module.scss'
 
-export default function Header() {
+export default function Header(): JSX.Element {
   const { pathname } = useLocation()
   const history = useHistory()
   const { data: settings } = useGetSettings()
@@ -17,7 +17,7 @@ export default function Header() {
   const isSettingsPage = pathname.includes('/settings')
   const isBuildPage = pathname.includes('/build/')
 
-  const logo = (settings: { data: { repoName: any } }) => {
+  const logo = (settings: { data: { repoName: string } }) => {
     if ((settings?.data && isIndexPage) || isBuildPage) {
       return settings?.data?.repoName
     } else {
@@ -29,11 +29,11 @@ export default function Header() {
     [s.saturated]: (settings?.data && isIndexPage) || isBuildPage,
   })
 
-  const openModal = () => {
+  const openModal = (): void => {
     setIsModalOpened(true)
   }
 
-  const rebuild = async (hash) => {
+  const rebuild = async (hash: string): Promise<void> => {
     const { data } = await createBuild(hash)
     history.push(`/build/${data.id}`)
   }
